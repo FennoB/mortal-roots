@@ -1,0 +1,50 @@
+Wie stelle ich das Aussagensytem im Code dar?
+
+Das Aussagensystem bricht Spiellogik auf logische Aussagen herunter.
+Ich will Welten erschaffen können, indem ich einfach schreibe:
+
+Ein Vektor hat zwei Koordinaten
+Eine Fläche hat einen Flächeninhalt
+Ein Viereck ist eine Fläche 
+	und hat zwei Vektoren 
+	und der Flächeninhalt ist die Fläche zwischen den Vektoren (Code)
+Eine zusammengesetzte Fläche hat mehrere mehrere Flächen 
+	und ihr Flächeninhalt ist die Summe dieser Flächen
+Eine größere Fläche hat einen Flächeninhalt über 10m²
+Ein Gebiet ist eine größere Fläche
+Ein Lebewesen hat Biologie (Code)
+Eine Pflanze ist ein Lebewesen mit Pflanzen-Erbgut (Code)
+Ein Baum ist eine Pflanze mit Baum-Erbgut (Code)
+Viele Bäume sind mindestens zehn Bäume
+Ein Wald ist ein Gebiet mit vielen Bäumen
+Ein Tier ist ein Lebewesen mit Tier-Erbgut
+Ein Hase ist ein Tier mit Hasen-Erbgut
+Ein Hase ist ein Pflanzenfresser
+
+
+...
+
+
+
+Die Bedeutung von sehr komplexen Aussagen kann auf Code ausgelagert werden.
+Eine wichtige Eigenschaft der Sprache soll es sein, dass Mustererkennung automatisch stattfindet.
+Dafür müssen Muster so exakt wie möglich definiert werden.
+Wenn wir ein Gebiet mit 9 Bäumen haben, ist es nach Definition noch kein Wald.
+Sobal wir einen weiteren Baum hinzufügen, soll das Gebiet automatisch als Wald-Objekt behandelt werden.
+Das heißt, dass eine stetige Mustererkennung stattfinden muss und dass Muster auf bestimmte Facetten einer Situation "lauschen" kann. Die Prüfung des Wald-Musters wird also für alle Objekte, die zu einem Wald werden könnten, registriert und die Bedingungen
+werden stets geprüft.
+So können auch Objekte induziert werden.
+Wenn wir zum Beispiel sagen "Eine Axt ist ein Werkzeug, und besteht aus einem Schaft und aus einem Axtkopf, wobei der Axtkopf am Ende des Schaftes befestigt ist." Dann können wir einen Axtkopf herstellen und ihn an einem großen Stock befestigen und das Spiel erkennt das Objekt automatisch als Axt, die wir benutzen können. Axt lauscht also auf das Verbinden-Event von Axtkopf und Schaft. So lassen sich auch Interaktionen definieren. Ein Griff ist eine Teilform, die sich festhalten lässt. Festhalten lassen sich nur Teilformen mit bestimmten Eigenschaften. Beim Erschaffen einer Form lauscht Griff also auf Events, die die Form verändern.
+Was ist ein Event? Zeitliche Abläufe müssen von der Engine auch dargestellt werden können. Dazu gibt es die Objektklasse Event. Ein Event findet in einem bestimmten Zeitraum statt. Events haben einen Anfang und ein Ende und lassen sich aus anderen Events zusammensetzen. Atomare Events haben keine Dauer sondern sind unendlich kurze Momente. Wenn es Blitzt, kommt es zu einem Blitz-Event, das atomar ist. Nach einem Blitz kommt immer ein Donner nach einer bestimmten Zeit. Der Donner ist auch ein atomares Event. Die Verzögerung lässt sich aus der Entfernung des Blitzes zum Spieler bestimmen.
+Ein Gewitter ist auch ein Event, aber kein atomares. Der Anfang eines Gewitters und das Ende sind atomare Events.
+Die Geburt eines Rehs kann ein atomares Event sein (je nachdem wie detailliert man sein möchte)
+Danach gibt es ein Reh mehr im Wald. Der Wald lauscht also auf das Event der Rehgeburt und ebenso auf den Rehtod.
+
+Gehen wir in Superposition. Einige Dinge sollten nicht als Superposition dargestellt werden. Die Darstellung als Superposition ist nur sinnvoll, wenn die Informationen einer detaillierteren Welt für den Spieler nicht relevant sind. 
+Eine Information bestitzt also eine Relevanz für den Spieler. Die Relevanz für den Spieler ist vom Detaillevel der Information abhängig. Auf einem sehr geringen Detaillevel kann das Spiel viele Informationen vergessen und auf Superpositionen vereinfachen. 
+Ein Spiel mit schlechtem Gedächtnis sollte mit einem Traum vergleichbar sein.
+Viele Spielzustände lassen sich nicht leicht als Superpositionen darstellen geschweige denn die Regeln die sich auf sie beziehen. Sobald genug Interesse für eine Information besteht, also sobald genug Regeln auf diese Information zugreifen und genug Komplexität bezüglich dieser Information besteht, muss die Darstellung durch eine konkrete Darstellung ersetzt werden.
+
+Ein Beispiel ist die Rehpopulation. Es wäre möglich die Anzahl der Rehpopulation eines Waldes selbst auch als Superposition darzustellen, sodass das Spiel noch nicht festgelegt hat, wie viele Rehe es in dem Wald gibt. Allerdings wird es häufig wesentlich einfacher sein, diese Zahl möglichst schnell festzulegen um die Messzeiten zu reduzieren. Ein Reh, das möglicherweise gar nicht existiert, sollte keine Aufenthaltswahrscheinlichkeiten haben. Das würde das System viel zu komplex machen. Es reicht wenn die Anzahl an Rehen fest steht, sobald ein Wald betreten wird. Wurde ein Wald vor langer Zeit betreten, so wird einfach eine grobe Simulation durchgeführt. Wenn die Rehe im Detail bekannt sind, muss ausgewählt werden, welche Rehe gestorben sind und was mit ihnen passiert ist. Die Knochen müssen vielleicht noch irgendwo zu finden sein. Bekannte Rehe sollten gealtert sein und vielleicht zufälliger Verletzungen erhalten haben. Bekannte Entitäten werden also nicht vergessen sondern detailliert weiter simuliert. Wann ist eine Entität wichtig? Sobald der Seed einer Entität festgelegt wurde, die Entität also gemessen wurde. 
+Wird also das Reh, was wir bereits kennen, vollständig simuliert, selbst wenn wir sehr weit weg sind? Natürlich nicht. Aber das 
+Spiel weiß, dass wir dieses Reh kennen und sieht dieses Reh als wichtiger an als andere Rehe in der Population. Wenn wir den Wald absuchen, werden wir das Reh also irgendwo finden.  
