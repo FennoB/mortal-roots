@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
 
             if (Input.GetKey(KeyCode.W))
             {
-                facingLeft = false;
                 delta.y = 1;
                 up = true;
             }
@@ -73,7 +72,6 @@ public class Player : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.S))
             {
-                facingLeft = true;
                 delta.y = -1;
                 down = true;
             }
