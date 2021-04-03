@@ -27,15 +27,34 @@ namespace MR.Items
         }
         public virtual void Tutorial()
         {
+            string itemtext = GetType().ToString().Replace("MR.Items.", "").ToLower();
+            if (itemtext.StartsWith("a") || 
+                itemtext.StartsWith("e") ||
+                itemtext.StartsWith("i") ||
+                itemtext.StartsWith("o") ||
+                itemtext.StartsWith("u"))
+            {
+                itemtext = "an " + itemtext;
+            }
+            else
+            {
+                itemtext = "a " + itemtext;
+            }
             Dialogue.Create()
-                .Sentence("You founds " + GetType().ToString().Replace("MR.Items.", "").ToLower() + "!")
+                .Sentence("You found " + itemtext + "!")
                 .Show();
         }
     }
 
     public class Axe : Item
     {
-
+        public override void Tutorial()
+        {
+            Dialogue.Create()
+                .Sentence("You found an axe!")
+                .Sentence("Press space to use it!")
+                .Show();
+        }
     }
 
     public class Apple : Item
