@@ -88,6 +88,7 @@ namespace MR.Items
             Dialogue.Create()
                 .Sentence("Nom nom nom...")
                 .Show();
+            player.health.hunger = Mathf.Max(0, player.health.hunger - .25f);
             container.Destroy();
         }
     }

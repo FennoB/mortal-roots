@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using MR.Items;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
     public WorldItem holding = null;
     public WorldItem worldItem = null;
 
+    public HealthSystem health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +31,20 @@ public class Player : MonoBehaviour
         mining = transform.GetChild(3).GetComponent<MiningController>();
         tool = transform.GetChild(1).gameObject;
         holdingRend = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        health = GetComponent<HealthSystem>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!health.alive)
+        {
+            if (Input.GetKey("r"))
+            {
+                SceneManager.LoadScene("main");
+            }
+            return;
+        }
         if (Time.realtimeSinceStartup > timer + 0.075f)
         {
             bool up = false;

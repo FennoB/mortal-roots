@@ -52,7 +52,6 @@ public class Dialogue
 
     public void Show()
     {
-        DialogueWriter.main.Clear();
         DialogueWriter.main.StartDialogue(this);
     }
 }

@@ -10,6 +10,7 @@ public class DialogueWriter : MonoBehaviour
     public static DialogueWriter main = null;
     public float lettersPerSecond = 20;
     public int lettersPerLine = 12;
+    public bool important;
     
     //public TMPro.TMP_Text title;
     public TMPro.TMP_Text text;
@@ -39,7 +40,7 @@ public class DialogueWriter : MonoBehaviour
                     waitForSpaceReleased = false;
                 }
             }
-            else if (Input.GetKeyUp(KeyCode.Space))
+            else if (Input.GetKeyUp(KeyCode.Space) && !important)
             {
                 DisplayNextSentence();
             }
@@ -48,6 +49,15 @@ public class DialogueWriter : MonoBehaviour
 
     public void StartWriting(Dialogue[] ds)
     {
+        if (important)
+        {
+            foreach (Dialogue d in ds)
+            {
+                dialogues.Enqueue(d);
+            }
+            return;
+        }
+
         dialogues.Clear(); // clearing Queue for tidying up
 
         foreach (Dialogue d in ds)
@@ -57,13 +67,27 @@ public class DialogueWriter : MonoBehaviour
 
         // starting 
         Dialogue first = dialogues.Dequeue();
-        StartDialogue(first);
+        StartNextDialogue(first);
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if (important)
+        {
+            dialogues.Enqueue(dialogue);
+        }
+        else
+        {
+            Clear();
+            StartNextDialogue(dialogue);
+        }
+    }
+
+    private void StartNextDialogue(Dialogue dialogue)
+    {
         waitForSpaceReleased = Input.GetKey(KeyCode.Space);
         writing = true;
+        important = dialogue.mode == "important";
         gameObject.SetActive(true);
         // updating UI
         //title.text = dialogue.name;
@@ -78,7 +102,7 @@ public class DialogueWriter : MonoBehaviour
         DisplayNextSentence();
     }
 
-    public void DisplayNextSentence()
+    private void DisplayNextSentence()
     {
         // dialogue is over if no more sentences need to be displayed
         if (sentences.Count == 0)
@@ -97,20 +121,26 @@ public class DialogueWriter : MonoBehaviour
     private IEnumerator TypeSentence(string sentence)
     {
         text.text = "";
+        float delay = 1f / lettersPerSecond;
+        if (important)
+        {
+            delay *= 2f;
+        }
         foreach (char letter in sentence.ToCharArray()) // converting sentence to char array
         {
             text.text += letter;
-            yield return new WaitForSeconds(1f / lettersPerSecond);
+            yield return new WaitForSeconds(delay);
         }
+        important = false;
     }
 
     // this method can also start a new dialogue
-    public void EndDialogue()
+    private void EndDialogue()
     {
         if (dialogues.Count != 0)
         {
             Dialogue next = dialogues.Dequeue();
-            StartDialogue(next);
+            StartNextDialogue(next);
         }
         else
         {
@@ -118,8 +148,9 @@ public class DialogueWriter : MonoBehaviour
         }
     }
 
-    public void Clear()
+    private void Clear()
     {
+        important = false;
         StopAllCoroutines();
         dialogues.Clear();
         sentences.Clear();
