@@ -17,9 +17,10 @@ public class DialogueWriter : MonoBehaviour
     private Queue<Dialogue> dialogues;
     private Queue<string> sentences;
 
+    bool waitForSpaceReleased = false;
     public bool writing = false;
 
-    void Awake()
+    void Start()
     {
         main = this;
         dialogues = new Queue<Dialogue>();
@@ -31,7 +32,14 @@ public class DialogueWriter : MonoBehaviour
     {
         if (writing)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (waitForSpaceReleased)
+            {
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    waitForSpaceReleased = false;
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
             {
                 DisplayNextSentence();
             }
@@ -54,8 +62,9 @@ public class DialogueWriter : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        gameObject.SetActive(true);
+        waitForSpaceReleased = Input.GetKey(KeyCode.Space);
         writing = true;
+        gameObject.SetActive(true);
         // updating UI
         //title.text = dialogue.name;
         sentences.Clear();

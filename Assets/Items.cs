@@ -4,19 +4,29 @@ using UnityEngine;
 
 namespace MR.Items
 {
+    public interface IItemContainer
+    {
+        void Destroy();
+    }
+
     public class Item
     {
         private static HashSet<Type> firstPickup = new HashSet<Type>();
-        private Player player;
+        protected Player player;
+        protected IItemContainer container;
+
+        public Item(IItemContainer container)
+        {
+            this.container = container;
+        }
 
         public virtual void PickedUp(Player p)
         {
             player = p;
             if (!firstPickup.Contains(GetType()))
             {
-                Tutorial();
+                Info();
             }
-            firstPickup.Add(GetType());
         }
         public virtual void Dropped()
         {
@@ -25,10 +35,10 @@ namespace MR.Items
         public virtual void Used()
         {
         }
-        public virtual void Tutorial()
+        public virtual void Info()
         {
             string itemtext = GetType().ToString().Replace("MR.Items.", "").ToLower();
-            if (itemtext.StartsWith("a") || 
+            if (itemtext.StartsWith("a") ||
                 itemtext.StartsWith("e") ||
                 itemtext.StartsWith("i") ||
                 itemtext.StartsWith("o") ||
@@ -43,22 +53,42 @@ namespace MR.Items
             Dialogue.Create()
                 .Sentence("You found " + itemtext + "!")
                 .Show();
+            firstPickup.Add(GetType());
         }
     }
 
     public class Axe : Item
     {
-        public override void Tutorial()
+        public Axe(IItemContainer container) : base(container)
+        {
+        }
+
+        public override void Info()
         {
             Dialogue.Create()
                 .Sentence("You found an axe!")
                 .Sentence("Press space to use it!")
                 .Show();
         }
+
+        public override void Used()
+        {
+            player.mining.SetMiningState(MiningController.MiningState.Cutting);
+        }
     }
 
     public class Apple : Item
     {
+        public Apple(IItemContainer container) : base(container)
+        {
+        }
 
+        public override void Used()
+        {
+            Dialogue.Create()
+                .Sentence("Nom nom nom...")
+                .Show();
+            container.Destroy();
+        }
     }
 }

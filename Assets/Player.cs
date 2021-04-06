@@ -6,15 +6,18 @@ public class Player : MonoBehaviour
     public float timer;
     Animator anim;
     SpriteRenderer rend;
-    MiningController mining;
+    public MiningController mining;
     bool facingLeft = false;
 
     public Sprite[] tools;
     GameObject tool;
 
+    public float[] itemProbabilities;
+    public GameObject[] itemPrefabs;
+
     public SpriteRenderer holdingRend;
-    public GroundItem holding = null;
-    public GroundItem groundItem = null;
+    public WorldItem holding = null;
+    public WorldItem worldItem = null;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +42,24 @@ public class Player : MonoBehaviour
             bool miningLeft = false;
             bool miningRight = false;
 
-            if (Input.GetKey(KeyCode.Space) && holding != null && holding.item is Axe)
+            if (!DialogueWriter.main.writing &&
+                Input.GetKey(KeyCode.Space))
+            {
+                if (holding != null)
+                {
+                    holding.item.Used();
+                }
+                else
+                {
+                    SearchItems();
+                }
+            }
+            else
+            {
+                mining.SetMiningState(MiningController.MiningState.None);
+            }
+
+            if (mining.currentState != MiningController.MiningState.None)
             {
                 if (facingLeft)
                 {
@@ -49,13 +69,8 @@ public class Player : MonoBehaviour
                 {
                     miningRight = true;
                 }
-                mining.SetMiningState(MiningController.MiningState.Cutting);
             }
-            else
-            {
-                //tool.GetComponent<SpriteRenderer>().sprite = tools[0];
-                mining.SetMiningState(MiningController.MiningState.None);
-            }
+
 
             Vector2Int delta = Vector2Int.zero;
 
@@ -118,14 +133,14 @@ public class Player : MonoBehaviour
 
     public void TakeItem()
     {
-        if (groundItem != null)
+        if (worldItem != null)
         {
             DropItem();
-            holding = groundItem;
-            groundItem.item.PickedUp(this);
+            holding = worldItem;
+            worldItem.item.PickedUp(this);
             holding.transform.parent = transform;
             holding.gameObject.SetActive(false);
-            groundItem = null;
+            worldItem = null;
         }
     }
 
@@ -137,6 +152,36 @@ public class Player : MonoBehaviour
             holding.transform.parent = null;
             holding.transform.position = transform.position + new Vector3(0, 0, 1);
             holding = null;
+        }
+    }
+
+    public void SearchItems()
+    {
+        float r = Random.value;
+        GameObject prefab = null;
+
+        for (int i = 0; i < itemPrefabs.Length; ++i)
+        {
+            if (r < itemProbabilities[i])
+            {
+                prefab = itemPrefabs[i];
+                break;
+            }
+            r -= itemProbabilities[i];
+        }
+
+        if (prefab != null)
+        {
+            GameObject item = GameObject.Instantiate(prefab);
+            worldItem = item.GetComponent<WorldItem>();
+            worldItem.item.Info();
+            TakeItem();
+        }
+        else
+        {
+            Dialogue.Create()
+                        .Sentence("Nothing to find here")
+                        .Show();
         }
     }
 }
