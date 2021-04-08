@@ -2,39 +2,35 @@
 using UnityEngine;
 
 using MR.Changes;
+using Wavescript.Gen;
 
 public class Chunk : MonoBehaviour
 {
-    public GameObject[] treePrefabs;
-    public float[] treeProbabs;
+    public GameObject[] fieldPrefabs;
+    public float[] fieldProbabs;
     public Dictionary<Vector2Int, GameObject> fields = new Dictionary<Vector2Int, GameObject>();
     public int chunkWidth = 16;
     public int fieldWidth = 16;
 
-    // Start is called before the first frame update
     public void Generate()
     {
         Vector2 v = transform.position;
 
         // Generator
-        Random.InitState(v.GetHashCode());
+        RandomNode gen = new RandomNode(v.GetHashCode());
 
         for (int y = 0; y < chunkWidth; ++y)
         {
             for (int x = 0; x < chunkWidth; ++x)
             {
-                for (int i = 0; i < treePrefabs.Length; ++i)
+                RandomNode fieldGen = gen.Expand();
+                int fieldtype = ProbDistribution.Categorical(fieldGen.Value, fieldProbabs);
+                if (fieldtype >= 0)
                 {
-                    GameObject prefab = treePrefabs[i];
-                    float probab = treeProbabs[i];
-                    if (probab > Random.value)
+                    GameObject thing = Spawn(fieldPrefabs[fieldtype], x, y);
+                    if (thing.tag == "tree")
                     {
-                        GameObject field = Instantiate(prefab);
-                        field.transform.SetParent(transform);
-                        field.transform.localPosition = new Vector3(x * fieldWidth, y * fieldWidth, y * fieldWidth - 2);
-                        field.GetComponentInChildren<SpriteRenderer>().flipX = Random.value > 0.5;
-                        fields[new Vector2Int(x, y)] = field;
-                        break;
+                        thing.GetComponentInChildren<SpriteRenderer>().flipX = fieldGen.Value > 0.5;
                     }
                 }
             }
@@ -61,5 +57,14 @@ public class Chunk : MonoBehaviour
                 Destroy(fields[fieldPosition]);
             }
         }
+    }
+
+    public GameObject Spawn(GameObject prefab, int x, int y)
+    {
+        GameObject obj = Instantiate(prefab);
+        obj.transform.SetParent(transform);
+        obj.transform.localPosition = new Vector3(x * fieldWidth, y * fieldWidth, y * fieldWidth - 2);
+        fields[new Vector2Int(x, y)] = obj;
+        return obj;
     }
 }

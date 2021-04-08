@@ -43,18 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d7189254aef9c47b6d968b90a797f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treePrefabs:
+  fieldPrefabs:
   - {fileID: 700280965577524758, guid: befb304bbc428214fb1eb35a01bde2c0, type: 3}
-  - {fileID: 8174939916875324279, guid: 93a85fe74a08f414680642660a11b472, type: 3}
   - {fileID: 8489757565720866614, guid: ff928b75b6a88dd4f9601b176b79b0f8, type: 3}
+  - {fileID: 8174939916875324279, guid: 93a85fe74a08f414680642660a11b472, type: 3}
   - {fileID: 8063667887230644028, guid: 5b238219878496f44a76adeb99bd8479, type: 3}
   - {fileID: 1049938384041595969, guid: 72715448a3f522f4fb75ff51fb03a98e, type: 3}
-  treeProbabs:
-  - 0.1
-  - 0.1
-  - 0.1
+  - {fileID: 5548536727730796158, guid: d1b740bfb7cdc07479694fe4f7bcc31f, type: 3}
+  - {fileID: 3290611152299716088, guid: 93fa415dc09478a43b0f2aae23c14461, type: 3}
+  fieldProbabs:
   - 0.05
   - 0.05
-  fields: []
+  - 0.05
+  - 0.025
+  - 0.025
+  - 0.05
+  - 0.001
   chunkWidth: 16
-  chunkHeight: 16
+  fieldWidth: 16
