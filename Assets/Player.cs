@@ -13,9 +13,6 @@ public class Player : MonoBehaviour
     public Sprite[] tools;
     GameObject tool;
 
-    public float[] itemProbabilities;
-    public GameObject[] itemPrefabs;
-
     public SpriteRenderer holdingRend;
     public WorldItem holding = null;
     public WorldItem worldItem = null;
@@ -150,6 +147,7 @@ public class Player : MonoBehaviour
             DropItem();
             holding = worldItem;
             worldItem.item.PickedUp(this);
+            worldItem.Changed();
             holding.transform.parent = transform;
             holding.gameObject.SetActive(false);
             worldItem = null;
@@ -171,16 +169,6 @@ public class Player : MonoBehaviour
     {
         float r = Random.value;
         GameObject prefab = null;
-
-        for (int i = 0; i < itemPrefabs.Length; ++i)
-        {
-            if (r < itemProbabilities[i])
-            {
-                prefab = itemPrefabs[i];
-                break;
-            }
-            r -= itemProbabilities[i];
-        }
 
         if (prefab != null)
         {

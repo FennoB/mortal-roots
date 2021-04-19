@@ -52,9 +52,9 @@ MonoBehaviour:
   - {fileID: 5548536727730796158, guid: d1b740bfb7cdc07479694fe4f7bcc31f, type: 3}
   - {fileID: 3290611152299716088, guid: 93fa415dc09478a43b0f2aae23c14461, type: 3}
   fieldProbabs:
-  - 0.05
-  - 0.05
-  - 0.05
+  - 0.1
+  - 0.1
+  - 0.1
   - 0.025
   - 0.025
   - 0.05

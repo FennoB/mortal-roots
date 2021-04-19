@@ -46,8 +46,16 @@ public class MiningController : MonoBehaviour
             {
                 timer = 0;
                 Vector2 location = other.transform.position;
-                Change change = new TreeChopped(location, Time.time);
+                Tree tree = other.GetComponent<Tree>();
+                Change change = new TreeChopped(location, Time.time, tree.rootPrefab);
                 other.transform.parent.parent.GetComponent<Forest>().AddChange(change);
+                GameObject obj = Instantiate((GameObject)Resources.Load("Items/Log", typeof(GameObject)));
+                obj.transform.position = location + 4f * Vector2.left + 2f * Vector2.down;
+                if (tree.isBig)
+                {
+                    obj = Instantiate((GameObject)Resources.Load("Items/Log", typeof(GameObject)));
+                    obj.transform.position = location + 6f * Vector2.left + 2f * Vector2.down;
+                }
             }
         }
     }

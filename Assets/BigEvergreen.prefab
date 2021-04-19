@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2150951317652279302}
+  - component: {fileID: 6298956550925789461}
+  - component: {fileID: 2280103793297663542}
   m_Layer: 0
   m_Name: BigEvergreen
   m_TagString: tree
@@ -31,6 +33,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6298956550925789461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049938384041595969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b942106519d455469f42c41e28a644a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBig: 1
+  rootPrefab: {fileID: 6752185602404184565, guid: 7a97038cd27a6084ba4670641276fe34, type: 3}
+--- !u!58 &2280103793297663542
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049938384041595969}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.5, y: -4}
+  serializedVersion: 2
+  m_Radius: 4
 --- !u!1 &6797084473111913735
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 583216151158332507}
   - component: {fileID: 2591831692656607444}
-  - component: {fileID: 700988004702183240}
   m_Layer: 0
   m_Name: BigEvergreen
   m_TagString: Untagged
@@ -114,29 +145,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &700988004702183240
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6797084473111913735}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -12}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 16, y: 32}
-    newSize: {x: 16, y: 32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 10, y: 10}
-  m_EdgeRadius: 0

@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4347887453898628651}
   - component: {fileID: 386901001517770710}
-  - component: {fileID: 5030541463328388928}
+  - component: {fileID: 7780868579137828627}
+  - component: {fileID: 7392604426801665151}
   m_Layer: 0
   m_Name: Evergreen
   m_TagString: tree
@@ -83,8 +84,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5030541463328388928
-BoxCollider2D:
+--- !u!114 &7780868579137828627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8174939916875324279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b942106519d455469f42c41e28a644a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootPrefab: {fileID: 6752185602404184565, guid: 7a97038cd27a6084ba4670641276fe34, type: 3}
+--- !u!58 &7392604426801665151
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,16 +110,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 16, y: 16}
-    newSize: {x: 16, y: 16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.5, y: -5}
   serializedVersion: 2
-  m_Size: {x: 8, y: 8}
-  m_EdgeRadius: 0
+  m_Radius: 3

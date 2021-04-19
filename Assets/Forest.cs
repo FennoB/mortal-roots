@@ -48,13 +48,12 @@ public class Forest : MonoBehaviour
                     c.chunkWidth = chunkWidth;
                     c.fieldWidth = fieldWidth;
                     c.Generate();
-                    if (!chunkChanges.ContainsKey(key))
+                    if (chunkChanges.ContainsKey(key))
                     {
-                        chunkChanges[key] = new List<Change>();
-                    }
-                    foreach (Change change in chunkChanges[key])
-                    {
-                        c.ApplyChange(change);
+                        foreach (Change change in chunkChanges[key])
+                        {
+                            c.ApplyChange(change, true);
+                        }
                     }
                 }
                 chunks[key] = c;
@@ -80,16 +79,16 @@ public class Forest : MonoBehaviour
 
     public void AddChange(Change change)
     {
-        Dialogue.Create()
-            .Sentence("A happy little tree was chopped")
-            .Sentence("Dont you feel sorry?")
-            .Sentence("...?")
-            .Show();
         Vector2 location = change.Where;
         int x = Mathf.FloorToInt(location.x / fieldWidth / chunkWidth);
         int y = Mathf.FloorToInt(location.y / fieldWidth / chunkWidth);
         Vector2Int chunk = new Vector2Int(x, y);
+
+        if (!chunkChanges.ContainsKey(chunk))
+        {
+            chunkChanges[chunk] = new List<Change>();
+        }
         chunkChanges[chunk].Add(change);
-        chunks[chunk].ApplyChange(change);
+        chunks[chunk].ApplyChange(change, false);
     }
 }

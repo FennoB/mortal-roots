@@ -19,7 +19,21 @@ namespace MR.Changes
 
     public class TreeChopped : Change
     {
-        public TreeChopped(Vector2 where, float when) : base(where, when)
+        public GameObject rootPrefab;
+        public TreeChopped(Vector2 where, float when, GameObject rootPrefab) : base(where, when)
+        {
+            this.rootPrefab = rootPrefab;
+        }
+
+        public GameObject GetRoots()
+        {
+            return rootPrefab;
+        }
+    }
+
+    public class ItemTaken : Change
+    {
+        public ItemTaken(Vector2 where, float when) : base(where, when)
         {
         }
     }

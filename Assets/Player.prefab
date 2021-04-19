@@ -307,9 +307,9 @@ GameObject:
   - component: {fileID: 8693193231659110755}
   - component: {fileID: 8693193231659110756}
   - component: {fileID: 4929767127138595303}
-  - component: {fileID: 8693193231659110757}
   - component: {fileID: 8693193231659110758}
   - component: {fileID: 141764465383809633}
+  - component: {fileID: 1771762076475600232}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -348,10 +348,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
+  mining: {fileID: 0}
   tools:
   - {fileID: 21300000, guid: 8cd03414b2f2c8949a05bb04a390cc88, type: 3}
-  groundItemPrefab: {fileID: 2374582287428368998, guid: d1b740bfb7cdc07479694fe4f7bcc31f, type: 3}
-  groundItem: {fileID: 0}
+  holdingRend: {fileID: 0}
+  holding: {fileID: 0}
+  worldItem: {fileID: 0}
+  health: {fileID: 0}
 --- !u!212 &4929767127138595303
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -403,32 +406,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8693193231659110757
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693193231659110759}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -3}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 8}
-    newSize: {x: 8, y: 8}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 6, y: 6}
-  m_EdgeRadius: 0
 --- !u!50 &8693193231659110758
 Rigidbody2D:
   serializedVersion: 4
@@ -448,7 +425,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &141764465383809633
 Animator:
@@ -469,6 +446,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &1771762076475600232
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693193231659110759}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -2}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &8693193233183628974
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace MR.Items
 {
+    public enum ItemType
+    {
+        Axe,
+        Apple,
+        Log
+    }
+
     public interface IItemContainer
     {
         void Destroy();
@@ -14,12 +21,20 @@ namespace MR.Items
         private static HashSet<Type> firstPickup = new HashSet<Type>();
         protected Player player;
         protected IItemContainer container;
+        protected ItemType itemType;
 
         public Item(IItemContainer container)
         {
+            itemType = (ItemType)Enum.Parse(typeof(ItemType), GetClassName());
             this.container = container;
         }
 
+        public static Item Create(IItemContainer container, ItemType itemType)
+        {
+            string s = "MR.Items." + Enum.GetName(typeof(ItemType), itemType);
+            Type type = Type.GetType(s);
+            return (Item)Activator.CreateInstance(type, container);
+        }
         public virtual void PickedUp(Player p)
         {
             player = p;
@@ -35,9 +50,17 @@ namespace MR.Items
         public virtual void Used()
         {
         }
+        public string GetClassName()
+        {
+            return GetType().ToString().Replace("MR.Items.", "");
+        }
+        public ItemType GetItemType()
+        {
+            return itemType;
+        }
         public virtual void Info()
         {
-            string itemtext = GetType().ToString().Replace("MR.Items.", "").ToLower();
+            string itemtext = GetClassName().ToLower();
             if (itemtext.StartsWith("a") ||
                 itemtext.StartsWith("e") ||
                 itemtext.StartsWith("i") ||
@@ -90,6 +113,13 @@ namespace MR.Items
                 .Show();
             player.health.hunger = Mathf.Max(0, player.health.hunger - .25f);
             container.Destroy();
+        }
+    }
+
+    public class Log : Item
+    {
+        public Log(IItemContainer container) : base(container)
+        {
         }
     }
 }
